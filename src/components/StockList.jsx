@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
 import finnHub from "../apis/finnHub";
+import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 const StockList = () => {
   const [watchList, setWatchList] = useState(["GOOGL", "MSFT", "AMZN"]);
   const [stock, setStock] = useState();
+
+  const changeColor = (change) => {
+    return change > 0 ? "text-green-500" : "text-red-500";
+  };
+
+  const renderIcon = (showIcon) => {
+    return showIcon > 0 ? <BsFillCaretUpFill /> : <BsFillCaretDownFill />;
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -43,32 +52,69 @@ const StockList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="">
       <table className="table-auto mt-5">
-        <thead>
+        <thead className=" bg-gray-200 border-b-2 border-gray-200 ">
           <tr>
-            <th>Name</th>
-            <th>Last</th>
-            <th>Chg</th>
-            <th>Chg%</th>
-            <th>High</th>
-            <th>Low</th>
-            <th>Open</th>
-            <th>Pclose</th>
+            <th className=" p-3 text-sm font-semibold tracking-wide text-left">
+              Name
+            </th>
+            <th className=" p-3 text-sm font-semibold tracking-wide text-left">
+              Last
+            </th>
+            <th className=" p-3 text-sm font-semibold tracking-wide text-left">
+              Chg
+            </th>
+            <th className=" p-3 text-sm font-semibold tracking-wide text-left">
+              Chg%
+            </th>
+            <th className=" p-3 text-sm font-semibold tracking-wide text-left">
+              High
+            </th>
+            <th className=" p-3 text-sm font-semibold tracking-wide text-left">
+              Low
+            </th>
+            <th className=" p-3 text-sm font-semibold tracking-wide text-left">
+              Open
+            </th>
+            <th className=" p-3 text-sm font-semibold tracking-wide text-left">
+              Pclose
+            </th>
           </tr>
         </thead>
         <tbody>
           {stock?.map((stockData) => {
             return (
-              <tr key={stockData.symbol}>
-                <th>{stockData.symbol}</th>
-                <td>{stockData.data.c}</td>
-                <td>{stockData.data.d}</td>
-                <td>{stockData.data.dp}</td>
-                <td>{stockData.data.h}</td>
-                <td>{stockData.data.l}</td>
-                <td>{stockData.data.o}</td>
-                <td>{stockData.data.pc}</td>
+              <tr className="border-b-2 bg-gray-50" key={stockData.symbol}>
+                <th className="p-3 text-sm  font-semibold tracking-wide text-left text-blue-500 hover:underline cursor-pointer">
+                  {stockData.symbol}
+                </th>
+                <td className=" p-3 text-sm text-gray-700">
+                  {stockData.data.c}
+                </td>
+                <td className={`${changeColor(stockData.data.d)} p-3 text-sm`}>
+                  <span className="flex justify-center items-center gap-2 ">
+                    {stockData.data.d} {renderIcon(stockData.data.d)}
+                  </span>
+                </td>
+                <td className={`${changeColor(stockData.data.d)}  p-3 text-sm`}>
+                  <span className="flex justify-center items-center gap-2 ">
+                    {stockData.data.dp}
+                    {renderIcon(stockData.data.d)}
+                  </span>
+                </td>
+                <td className=" p-3 text-sm text-gray-700">
+                  {stockData.data.h}
+                </td>
+                <td className=" p-3 text-sm text-gray-700">
+                  {stockData.data.l}
+                </td>
+                <td className=" p-3 text-sm text-gray-700">
+                  {stockData.data.o}
+                </td>
+                <td className=" p-3 text-sm text-gray-700">
+                  {stockData.data.pc}
+                </td>
               </tr>
             );
           })}
