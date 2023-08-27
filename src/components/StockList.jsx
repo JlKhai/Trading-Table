@@ -1,10 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import finnHub from "../apis/finnHub";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
+import { WatchListContext } from "../context/watchListContext";
+import { useNavigate } from "react-router-dom";
 
 const StockList = () => {
-  const [watchList, setWatchList] = useState(["GOOGL", "MSFT", "AMZN"]);
   const [stock, setStock] = useState();
+  const { watchList } = useContext(WatchListContext);
+  // console.log(value);
+
+  const nav = useNavigate();
+  const handleStockSelete = (stock) => {
+    nav(`detail/${stock}`);
+  };
 
   const changeColor = (change) => {
     return change > 0 ? "text-green-500" : "text-red-500";
@@ -49,10 +57,10 @@ const StockList = () => {
     fetchData();
 
     return () => (isMounted = false);
-  }, []);
+  }, [watchList]);
 
   return (
-    <div className="">
+    <div className=" z-0">
       <table className="table-auto mt-5">
         <thead className=" bg-gray-200 border-b-2 border-gray-200 ">
           <tr>
@@ -85,7 +93,11 @@ const StockList = () => {
         <tbody>
           {stock?.map((stockData) => {
             return (
-              <tr className="border-b-2 bg-gray-50" key={stockData.symbol}>
+              <tr
+                onClick={() => handleStockSelete(stockData.symbol)}
+                className="border-b-2 bg-gray-50"
+                key={stockData.symbol}
+              >
                 <th className="p-3 text-sm  font-semibold tracking-wide text-left text-blue-500 hover:underline cursor-pointer">
                   {stockData.symbol}
                 </th>
