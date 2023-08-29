@@ -5,22 +5,29 @@ import { WatchListContext } from "../context/watchListContext";
 const AutoComplete = () => {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
+  // console.log(results);
+  const { addStock } = useContext(WatchListContext);
 
   const renderDropdown = () => {
     const dropDownClass = search ? null : "hidden";
-
-    const { addStock } = useContext(WatchListContext);
-
     return (
       <ul
-        className={`${dropDownClass} py-2 text-sm text-gray-700 dark:text-gray-200`}
+        className={`z-10 ${dropDownClass} py-2 text-sm text-gray-700 dark:text-gray-200 p-2 h-44 overflow-x-hidden w-72 bg-gray-50`}
       >
-        {/* {results?.map((result,index) => {
-          return <li key={index}>{result?.symbol}</li>;
-        })} */}
-        <li>abc</li>
-        <li>def</li>
-        <li>abc</li>
+        {results.map((result, index) => {
+          return (
+            <li
+              onClick={() => {
+                addStock(result.symbol);
+                setSearch("");
+              }}
+              className="text-sm w-fit cursor-pointer hover:bg-gray-200"
+              key={index}
+            >
+              {result?.description} ({result?.symbol})
+            </li>
+          );
+        })}
       </ul>
     );
   };
@@ -29,14 +36,14 @@ const AutoComplete = () => {
     let isMounted = true;
     const fetchData = async () => {
       try {
-        const response = await finnHub.get("/search", {
+        const { data } = await finnHub.get("/search", {
           params: {
             q: search,
           },
         });
-        // console.log(response.data);
+        // console.log(data.result);
         if (isMounted) {
-          setResults(response.data);
+          setResults(data.result);
         }
       } catch (error) {
         console.log(error);
@@ -54,15 +61,16 @@ const AutoComplete = () => {
   }, [search]);
 
   return (
-    <div className="w-50 p-5 rounded mx-auto">
-      <div className=" bg-white  divide-y divide-gray-100 shadow">
+    <div className="mb-24 w-50 p-5 rounded mx-auto">
+      <div className=" bg-white divide-y divide-gray-100 shadow">
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           type="text "
           placeholder="Search"
+          autoComplete="off"
           className="
-       bg-gray-50 p-3 outline-none rounded "
+       bg-gray-100 p-2 text-gray-800 outline-none rounded w-72"
         />
         {renderDropdown()}
       </div>

@@ -45,7 +45,7 @@ const StockList = () => {
           };
         });
 
-        console.log(data);
+        // console.log(data);
 
         if (isMounted) {
           setStock(data);
@@ -60,7 +60,7 @@ const StockList = () => {
   }, [watchList]);
 
   return (
-    <div className=" z-0">
+    <div className="z-0">
       <table className="table-auto mt-5">
         <thead className=" bg-gray-200 border-b-2 border-gray-200 ">
           <tr>

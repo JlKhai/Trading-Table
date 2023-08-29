@@ -11,16 +11,16 @@ export const WatchListContextProvider = ({ children }) => {
     }
   };
 
-  // const deleteStock = (stock) => {
-  //   setWatchList(
-  //     watchList.filter((el) => {
-  //       return el !== stock;
-  //     })
-  //   );
-  // };
+  const deleteStock = (stock) => {
+    setWatchList(
+      watchList.filter((el) => {
+        return el !== stock;
+      })
+    );
+  };
 
   return (
-    <WatchListContext.Provider value={{ watchList, addStock }}>
+    <WatchListContext.Provider value={{ watchList, addStock, deleteStock }}>
       {children}
     </WatchListContext.Provider>
   );
