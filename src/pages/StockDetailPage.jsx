@@ -72,8 +72,8 @@ const StockDetailPage = () => {
     };
     fetchData();
   }, [symbol]);
-  console.log(symbol);
-  console.log(chartData);
+  // console.log(symbol);
+  // console.log(chartData);
   return (
     <div>
       {chartData && <StockChart chartData={chartData} symbol={symbol} />}

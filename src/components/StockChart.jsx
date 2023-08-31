@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Chart from "react-apexcharts";
+import StockData from "./StockData";
 
 const StockChart = ({ chartData, symbol }) => {
   const [dataFormat, setDateFormat] = useState("24h");
@@ -62,7 +63,7 @@ const StockChart = ({ chartData, symbol }) => {
 
   const renderButton = (btn) => {
     const classes =
-      "p-2 select-none rounded-lg mr-1 shadow-lg hover:text-white hover:bg-blue-500 border ";
+      "p-2 select-none rounded mr-1 shadow-lg hover:text-white hover:bg-blue-500 border ";
     if (btn === dataFormat) {
       return classes + "bg-blue-700 text-white";
     } else {
@@ -92,6 +93,7 @@ const StockChart = ({ chartData, symbol }) => {
           1y
         </button>
       </div>
+      <StockData symbol={symbol} />
     </div>
   );
 };

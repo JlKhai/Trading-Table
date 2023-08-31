@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 const StockList = () => {
   const [stock, setStock] = useState();
-  const { watchList } = useContext(WatchListContext);
+
+  const { watchList, deleteStock } = useContext(WatchListContext);
   // console.log(value);
 
   const nav = useNavigate();
@@ -60,7 +61,7 @@ const StockList = () => {
   }, [watchList]);
 
   return (
-    <div className="z-0">
+    <div className="z-0 mb-32">
       <table className="table-auto mt-5">
         <thead className=" bg-gray-200 border-b-2 border-gray-200 ">
           <tr>
@@ -88,6 +89,7 @@ const StockList = () => {
             <th className=" p-3 text-sm font-semibold tracking-wide text-left">
               Pclose
             </th>
+            <th className=" p-3 text-sm font-semibold tracking-wide text-left"></th>
           </tr>
         </thead>
         <tbody>
@@ -126,6 +128,17 @@ const StockList = () => {
                 </td>
                 <td className=" p-3 text-sm text-gray-700">
                   {stockData.data.pc}
+                </td>
+                <td>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteStock(stockData.symbol);
+                    }}
+                    className=" py-1 px-2 border-2 border-red-200 hover:bg-red-600 rounded  hover:text-white mt-1"
+                  >
+                    remove
+                  </button>
                 </td>
               </tr>
             );

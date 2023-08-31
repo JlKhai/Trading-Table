@@ -61,7 +61,7 @@ const AutoComplete = () => {
   }, [search]);
 
   return (
-    <div className="mb-24 w-50 p-5 rounded mx-auto">
+    <div className="mb-14 w-50  rounded mx-auto">
       <div className=" bg-white divide-y divide-gray-100 shadow">
         <input
           value={search}
